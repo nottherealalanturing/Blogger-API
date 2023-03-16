@@ -1,6 +1,6 @@
 const express = require("express");
 const postsRouter = require("express").Router();
-const Post = require("../models/Post");
+const Post = require("../models/post");
 const { authenticateUser } = require("../utils/middleware");
 
 // GET /posts

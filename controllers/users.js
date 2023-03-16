@@ -1,7 +1,6 @@
 const usersRouter = require("express").Router();
 const User = require("../models/user");
 const passport = require("passport");
-const User = require("../models/user");
 const { authenticateUser } = require("../utils/middleware");
 
 usersRouter.post("/register", async (req, res) => {
