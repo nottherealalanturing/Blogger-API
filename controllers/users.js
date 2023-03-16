@@ -1,46 +1,28 @@
 const usersRouter = require("express").Router();
 const User = require("../models/user");
+const passport = require("passport");
+const User = require("../models/user");
+const { authenticateUser } = require("../utils/middleware");
 
-usersRouter.get("/", async (req, res) => {
-  const users = await User.find();
-  res.json(users);
-});
-
-usersRouter.get(":/id", async (req, res) => {
-  const { id } = req.params;
-
-  const user = await User.findById(id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  res.json(user);
-});
-
-usersRouter.post("/", async (req, res) => {
-  const user = new User(req.body);
+usersRouter.post("/register", async (req, res) => {
+  const { name, email, password } = req.body;
+  const user = new User({ name, email });
+  await user.setPassword(password);
   await user.save();
-  res.status(201).json(user);
+  res.json({ message: "User registered successfully" });
 });
 
-usersRouter.put("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  const user = await User.findByIdAndUpdate(id, req.body, { new: true });
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  res.json(user);
+usersRouter.post("/login", passport.authenticate("local"), (req, res) => {
+  res.json({ message: "Logged in successfully" });
 });
 
-usersRouter.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
-
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
-  }
-
-  await user.remove();
-
-  return res.status(204).send();
+usersRouter.get("/logout", authenticateUser, (req, res) => {
+  req.logout();
+  res.json({ message: "Logged out successfully" });
 });
+
+usersRouter.get("/me", authenticateUser, (req, res) => {
+  res.json({ user: req.user });
+});
+
+module.exports = usersRouter;
