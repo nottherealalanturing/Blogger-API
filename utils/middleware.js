@@ -1,3 +1,4 @@
+const passport = require("passport");
 const logger = require("./logger.js");
 
 const requestLogger = (request, response, next) => {
@@ -29,8 +30,20 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
+const authenticateUser = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
+};
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
+  authenticateUser,
 };
