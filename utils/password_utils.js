@@ -1,9 +1,8 @@
 const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
+const { PRI_KEY } = require("./config");
 
-const PRIV_KEY = `fs.readFileSync(pathToKey, "utf8");`;
+const PRIV_KEY = PRI_KEY;
 
 const validatePassword = (password, hash, salt) => {
   var hashVerify = crypto
