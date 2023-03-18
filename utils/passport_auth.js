@@ -3,9 +3,9 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const fs = require("fs");
 const path = require("path");
 const User = require("../models/user");
-const { PUB_KEY } = require("./config");
+const { PUBL_KEY } = require("./config");
 
-const PUB_KEY = PUB_KEY;
+const PUB_KEY = PUBL_KEY;
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
