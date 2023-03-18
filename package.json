@@ -22,11 +22,15 @@
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-session": "^1.17.3",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
+    "npm": "^9.6.2",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"

@@ -5,6 +5,7 @@ const database = require("./utils/database");
 const middleware = require("./utils/middleware");
 const postsRouter = require("./controllers/posts");
 const usersRouter = require("./controllers/users");
+const swaggerDocs = require("./utils/swagger");
 
 const app = express();
 require("express-async-errors");
@@ -22,8 +23,9 @@ require("./utils/passport_auth");
 
 database();
 
-app.use("/auth", usersRouter);
-app.use("/posts", postsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
+swaggerDocs(app, 3210);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
