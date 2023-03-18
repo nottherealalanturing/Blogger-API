@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
@@ -12,25 +11,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    passwordHash: {
+    hash: {
       type: String,
       required: true,
     },
+    username: String,
+    salt: String,
   },
   {
     timestamps: true,
   }
 );
-
-userSchema.methods.setPassword = async function (password) {
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  this.passwordHash = await bcrypt.hash(password, salt);
-};
-
-userSchema.methods.validatePassword = async function (password) {
-  return await bcrypt.compare(password, this.passwordHash);
-};
 
 const User = mongoose.model("User", userSchema);
 

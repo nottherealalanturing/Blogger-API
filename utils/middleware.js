@@ -14,7 +14,7 @@ const unknownEndpoint = (request, response) => {
 };
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message);
+  //logger.error(error.message);
 
   if (error.name === "CastError")
     response.status(404).json({ error: "malformatted id" });
@@ -22,22 +22,30 @@ const errorHandler = (error, request, response, next) => {
     response.status(404).json({ error: error.message });
   else if (error.name === "JsonWebTokenError")
     return response.status(400).json({ error: error.message });
+  else if (err.code === 11000)
+    return response.status(400).json({ error: error.message });
   else if (error.name === "TokenExpiredError")
     return response.status(401).json({
       error: "token expired",
     });
+  else if (err.code === 11000) {
+    res.status(400).send({ message: "Email already exists" });
+  } else {
+    //console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 
   next(error);
 };
 
 const authenticateUser = (req, res, next) => {
-  passport.authenticate("jwt", { session: false }, (err, user, info) => {
-    if (err || !user) {
-      return res.status(401).json({ message: "Unauthorized" });
+  passport.authenticate("jwt", { session: false }, (error, user) => {
+    if (error || !user) {
+      res.status(401).json({ message: "Unauthorized" });
+    } else {
+      req.user = user;
+      next();
     }
-
-    req.user = user;
-    next();
   })(req, res, next);
 };
 
