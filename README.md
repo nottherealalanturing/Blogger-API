@@ -4,6 +4,8 @@ This is a RESTful API for managing posts. It allows users to create, read, updat
 
 ## API Endpoints
 
+https://blogger-api-production.up.railway.app/api/
+
 ### Authentication
 
 - `POST /api/auth/register` - Create a new user
@@ -41,7 +43,7 @@ Create a `.env` file in the root directory of the project and set the following 
 
 ### API Documentation
 
-You can find the Swagger documentation for this API at `/docs`
+You can find the Swagger documentation for this API [here](https://blogger-api-production.up.railway.app/api/docs/)
 
 ### License
 
