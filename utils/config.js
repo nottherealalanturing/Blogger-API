@@ -6,12 +6,12 @@ const MONGODB_URI = () => {
   return process.env.MONGODB_URI;
 };
 
-const PUBL_KEY = process.env.PUB_KEY;
+const PUBL_KEY = process.env.PUBL_KEY;
 const PRI_KEY = process.env.PRI_KEY;
 
 module.exports = {
   MONGODB_URI,
   PORT,
-  PUB_KEY,
+  PUBL_KEY,
   PRI_KEY,
 };
